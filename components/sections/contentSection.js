@@ -58,18 +58,18 @@ export default function HomeSection({ title, content, alignment = null }) {
     return (
         <section
             ref={sectionRef}
-            className="min-h-screen w-full flex flex-col justify-center"
+            className="min-h-screen w-full flex flex-col justify-center px-4"
         >
             <h2
                 ref={titleRef}
-                className="text-9xl font-caesar mb-5 font-light"
+                className="text-4xl md:text-9xl font-caesar mb-5 font-light"
             >
                 {title}
             </h2>
 
             <p
                 ref={contentRef}
-                className="text-4xl font-light"
+                className="text-xl md:text-4xl font-light"
             >
                 {content}
             </p>

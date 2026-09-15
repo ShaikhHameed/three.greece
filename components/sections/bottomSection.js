@@ -46,7 +46,7 @@ export default function BottomSection({ title}) {
         >
             <h2
                 ref={titleRef}
-                className="text-8xl font-caesar mb-10 font-light"
+                className="text-4xl md:text-8xl font-caesar mb-10 font-light"
             >
                 {title}
             </h2>

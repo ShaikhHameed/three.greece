@@ -31,8 +31,8 @@ export default function HomeBanner({ title, content }) {
     return (
         <>
             <section ref={containerRef} className="min-h-screen w-full flex flex-col text-center justify-end pb-25">
-                <h1 ref={titleRef} className="text-9xl font-caesar mb-10 font-light">{title}</h1>
-                <p ref={contentRef} className="text-4xl font-light">{content}</p>
+                <h1 ref={titleRef} className="text-4xl md:text-9xl font-caesar md:mb-10 font-light">{title}</h1>
+                <p ref={contentRef} className="text-xl md:text-4xl font-light">{content}</p>
             </section>
         </>
     )
