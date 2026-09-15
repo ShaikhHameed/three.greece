@@ -2,23 +2,51 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-
 import { Water } from "three/addons/objects/Water.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 
-export default function ThreeJsScene() {
+export default function ThreeJsScene({ onProgress, onLoaded }) {
     const canvasRef = useRef(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
 
         if (!canvas) return;
+
+        /*
+        =========================================
+        LOADING MANAGER
+        Tracks every loader below (GLTF model,
+        HDR environment, water normal texture) so
+        the loading screen reflects true overall
+        progress and only disappears once
+        everything has actually loaded.
+        =========================================
+        */
+
+        const manager = new THREE.LoadingManager();
+
+        manager.onProgress = (url, itemsLoaded, itemsTotal) => {
+            const percent = Math.round(
+                (itemsLoaded / itemsTotal) * 100
+            );
+
+            onProgress?.(percent);
+        };
+
+        manager.onLoad = () => {
+            onProgress?.(100);
+            onLoaded?.();
+        };
+
+        manager.onError = (url) => {
+            console.error("Error loading:", url);
+        };
 
         const scene = new THREE.Scene();
 
@@ -55,7 +83,7 @@ export default function ThreeJsScene() {
         =========================================
         */
 
-        const loader = new GLTFLoader();
+        const loader = new GLTFLoader(manager);
 
         loader.load(
             "/assets/models/greece-wise-statue.glb",
@@ -222,7 +250,7 @@ export default function ThreeJsScene() {
                     textureHeight: 512,
 
                     waterNormals:
-                        new THREE.TextureLoader().load(
+                        new THREE.TextureLoader(manager).load(
                             "/assets/images/waternormals.jpg",
                             (texture) => {
                                 texture.wrapS =
@@ -256,7 +284,7 @@ export default function ThreeJsScene() {
         */
 
         const rgbeLoader =
-            new RGBELoader();
+            new RGBELoader(manager);
 
         rgbeLoader.load(
             "/assets/hdris/hdr2.hdr",
@@ -436,6 +464,7 @@ export default function ThreeJsScene() {
 
             water.material.dispose();
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

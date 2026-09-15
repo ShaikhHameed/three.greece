@@ -7,11 +7,9 @@ import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-export default function HomeSection({ title, content, alignment = null }) {
+export default function BottomSection({ title}) {
     const sectionRef = useRef(null);
     const titleRef = useRef(null);
-    const contentRef = useRef(null);
-
     useGSAP(() => {
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -29,7 +27,7 @@ export default function HomeSection({ title, content, alignment = null }) {
             {
                 y: 100,
                 opacity: 0,
-                start:"bottom-=30%",
+                start:"start 90%",
                 markers:true,
             },
             {
@@ -38,41 +36,20 @@ export default function HomeSection({ title, content, alignment = null }) {
                 ease: "none",
             }
         )
-        
-        .fromTo(
-            contentRef.current,
-            {
-                y: 100,
-                opacity: 0,
-            },
-            {
-                y: 0,
-                opacity: 1,
-                ease: "none",
-            },
-            0 // starts at the same time as title
-        );
 
     }, { scope: sectionRef });
 
     return (
         <section
             ref={sectionRef}
-            className="min-h-screen w-full flex flex-col justify-center"
+            className="min-h-screen w-full flex flex-col text-center justify-end pb-25"
         >
             <h2
                 ref={titleRef}
-                className="text-9xl font-caesar mb-5 font-light"
+                className="text-8xl font-caesar mb-10 font-light"
             >
                 {title}
             </h2>
-
-            <p
-                ref={contentRef}
-                className="text-4xl font-light"
-            >
-                {content}
-            </p>
         </section>
     );
 }

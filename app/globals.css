@@ -5,6 +5,14 @@ body{
   color: white;
 }
 
+.font-caesar{
+  font-family: var(--font-caesar);
+}
+
+.font-lato{
+  font-family: var(--font-lato);
+}
+
 
 #canvas{
   position: fixed;

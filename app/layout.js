@@ -1,13 +1,13 @@
 import SmoothScrollLayout from "@/components/wrappers/smoothScrollWrapper";
 import "./globals.css";
-import { Italianno } from 'next/font/google';
 import { Lato } from "next/font/google";
-import ThreeJsScene from "@/components/scene/threeScene";
+import SceneLoader from "@/components/scene/sceneLoader";
+import { Caesar_Dressing } from 'next/font/google';
 
 
-const italianno = Italianno({
+const caesar = Caesar_Dressing({
   weight: '400',
-  variable: "--font-italianno",
+  variable: "--font-caesar",
   subsets: ['latin'],
   display: 'swap',
 });
@@ -23,14 +23,14 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${italianno.variable} ${lato.variable} font-italianno h-full antialiased`}
+      className={`${caesar.variable} ${lato.variable} font-lato h-full antialiased`}
     >
       
       <body className="min-h-full flex flex-col">
-        <ThreeJsScene/>
-      <SmoothScrollLayout>
-        {children}
-      </SmoothScrollLayout>
+        <SceneLoader/>
+        <SmoothScrollLayout>
+          {children}
+        </SmoothScrollLayout>
       </body>
       
     </html>
